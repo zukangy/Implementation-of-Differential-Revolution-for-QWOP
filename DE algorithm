@@ -1,0 +1,27 @@
+Defaults:
+1. Population size m, default 20. 
+
+2. crossover probability pcr ∈ [0,1], default 0.7. 
+
+3. max iteration number maxIter, default 1000.
+
+4. mutation weight µ, default 0.8.
+
+Algorithm:
+
+1. Initially, spawn a number of candidate solutions {X1,X2,...,Xm} randomly in the search space [−1,1]^n, we call them population. For each solution in the population, compute the value of objective function {f(X1),...,f(Xm)}. Set the score Fbest = mink f(Xk). Set iteration number k = 0. 
+
+2. When k < maxIter, we repeat the following:
+    (a) For each candidate Xl in the population, we do: 
+        i. Pick 3 other candidates Xa,Xb,Xc which are distinct from each other and diﬀerent from Xl. 
+        ii. Randomly pick an index R ∈{1,2,...,n}. 
+        
+        iii. Compute the candidate’s potential new mutant Y = [y1,...,yn] as follows: 
+            A. For each i ∈{1,2,...,n}, pick a uniformly distributed random number ri ∼ U(0,1). 
+            B. If ri < pcr or i == R, then set yi = Xa,i + µ∗(Xb,i −Xc,i) 
+                    then clip back into search space : yi = 1 if yi > 1;  yi = −1 if yi < −1; and yi remain unchanged, otherwise.
+               otherwise set yi = Xl,i, which is the i-th entry of Xl. 
+               
+        iv. If f(Y ) < f(Xl) then replace Xl by its mutant Y in the population, which is Xl ← Y . 
+        
+    (b) k ← k + 1, keep track of the best score Fbest = mink f(Xk). 3. Pick the best of the population and return.
